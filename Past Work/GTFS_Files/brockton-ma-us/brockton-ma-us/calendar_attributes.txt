@@ -1,0 +1,5 @@
+service_id,service_description
+c_1703_b_4246_d_31,School Calendar (Monday-Friday)
+c_1589_b_973_d_64,Year Round Service (Sunday only)
+c_1589_b_973_d_32,Year Round Service (Saturday only)
+c_1589_b_973_d_31,Year Round Service (Monday-Friday)

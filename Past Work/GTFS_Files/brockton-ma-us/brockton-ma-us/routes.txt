@@ -1,0 +1,21 @@
+agency_id,route_id,route_short_name,route_long_name,route_desc,route_type,route_url,route_color,route_text_color,route_sort_order,min_headway_minutes,eligibility_restricted
+444,2933,1,Montello Street Via North Main Street,Travels from BAT centre to Walmart,3,http://www.ridebat.com/schedulemaps/brockton/r1/,5eaccc,000000,0,,0
+444,2934,2,S Plaza/Campello Via Main Street,Travels from Batcenter to shaws and back to Bat center,3,http://www.ridebat.com/schedulemaps/brockton/r2/,743299,ffffff,1,40,0
+444,2943,11,Cary Hill & The Village,Travels to Cary Hill and the Village and back to Bat center,3,http://www.ridebat.com/schedulemaps/brockton/r11/,aa6182,000000,10,40,0
+444,3219,12,Routes to Boston and Beyond ,No transfers permitted for these trips,3,http://www.ridebat.com/schedulemaps/r12/,c1ae38,000000,11,,0
+444,2945,13,"Mini-Maller Westgate Mall, Brockton",Travels from westgate mall to Goddard Rehab & Nursing and back to mall,3,http://www.ridebat.com/schedulemaps/r13/,ae8dac,000000,12,60,0
+444,2946,14,Stoughton via Brockton,Travels from bat center-westgate mall-cobbs center stoughton,3,http://www.ridebat.com/schedulemaps/r14/,c4812d,000000,13,60,0
+444,2948,BSU 1,Boyden/Shea Durgin,Bridgewater State University Service,3,http://www.ridebat.com/wp-content/uploads/2014/04/bsuschedule.pdf,0fa14a,000000,14,15,0
+444,3223,BSU 12,Bridgewater State University Route 12,,3,http://www.ridebat.com/wp-content/uploads/2014/04/bsuschedule.pdf,da0a1a,000000,15,20,0
+444,3220,BSU 2,Boyden/Tinsley/Spring Street Lot,,3,http://www.ridebat.com/wp-content/uploads/2014/04/bsuschedule.pdf,00aceb,000000,16,10,0
+444,3221,BSU 28,Bridgewater - Brockton,,3,http://www.bsutransit.com/uploads/9/9/0/5/9905788/bsu_transit_schedule_2015-2016.pdf,700ab0,ffffff,17,,0
+444,3222,BSU 3,Bridgewater State University Route 3,,3,http://www.bsutransit.com/uploads/9/9/0/5/9905788/bsu_transit_schedule_2015-2016.pdf,8e7608,ffffff,18,15,0
+444,2947,RF,Rockland Flex,Flexible Route Rockland to Brockton,3,http://www.ridebat.com/schedulemaps/rockland/,223c8a,ffffff,19,75,0
+444,2935,3,VA Hospital via Belmont,Travels to VA Hospital and back to Bat center,3,http://www.ridebat.com/schedulemaps/brockton/r3/,b94ad0,000000,2,40,0
+444,2936,4,Westgate via Pleasant,Travels to westgate mall and back to Bat center,3,http://www.ridebat.com/schedulemaps/brockton/r4/,574fd8,ffffff,3,40,0
+444,2937,4A,Westgate Mall via N Warren,Travels to Westgate mall via N Warren st and back to Bat center,3,http://www.ridebat.com/schedulemaps/brockton/r4a/,5c5dbf,ffffff,4,40,0
+444,2938,5,Brockton Hospital via Centre Street,From Bat center to Brockton Hospital Via Centre Street and back to Bat center,3,http://www.ridebat.com/schedulemaps/brockton/r5/,74c1d8,000000,5,40,0
+444,2939,6,Massasoit via Crescent Street,Travels from BAT center to massasoit college student union and back to Bat center,3,http://www.ridebat.com/schedulemaps/brockton/r6/,de9240,000000,6,40,0
+444,2940,8,Southfield via Warren & Plain Street,From Bat center to Southfield via Warren ave & Plain St and back to Bat center,3,http://www.ridebat.com/schedulemaps/brockton/r8/,80af74,000000,7,40,0
+444,2941,9,Pearl via W Elm & Torrey,From Bat center to pearl Via W Elm & Torrey and back to Bat center,3,http://www.ridebat.com/schedulemaps/brockton/r9/,ddbf53,000000,8,40,0
+444,2942,10,Lisa & Howard via N Quincy & Court,From BAt center travels to Lisa & Howard via N. Quincy & Court and back to Bat center,3,http://www.ridebat.com/schedulemaps/brockton/r10/,589e31,000000,9,40,0

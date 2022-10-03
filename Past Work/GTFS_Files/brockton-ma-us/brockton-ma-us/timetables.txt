@@ -1,0 +1,81 @@
+timetable_id,route_id,direction_id,start_date,end_date,monday,tuesday,wednesday,thursday,friday,saturday,sunday,route_label,service_notes,direction_label,orientation
+1,2938,0,20150101,20190101,0,0,0,0,0,0,1,Brockton Hospital via Centre Street,Year Round Service (Sunday only),Eastbound,horizontal
+2,2938,0,20150101,20190101,0,0,0,0,0,1,0,Brockton Hospital via Centre Street,Year Round Service (Saturday only),Eastbound,horizontal
+3,2938,0,20150101,20190101,1,1,1,1,1,0,0,Brockton Hospital via Centre Street,Year Round Service (Monday-Friday),Eastbound,horizontal
+4,2938,1,20150101,20190101,0,0,0,0,0,0,1,Brockton Hospital via Centre Street,Year Round Service (Sunday only),Westbound,horizontal
+5,2938,1,20150101,20190101,0,0,0,0,0,1,0,Brockton Hospital via Centre Street,Year Round Service (Saturday only),Westbound,horizontal
+6,2938,1,20150101,20190101,1,1,1,1,1,0,0,Brockton Hospital via Centre Street,Year Round Service (Monday-Friday),Westbound,horizontal
+7,2943,0,20150101,20190101,0,0,0,0,0,0,1,Cary Hill & The Village,Year Round Service (Sunday only),Northbound,horizontal
+8,2943,0,20150101,20190101,0,0,0,0,0,1,0,Cary Hill & The Village,Year Round Service (Saturday only),Northbound,horizontal
+9,2943,0,20150101,20190101,1,1,1,1,1,0,0,Cary Hill & The Village,Year Round Service (Monday-Friday),Northbound,horizontal
+10,2943,1,20150101,20190101,0,0,0,0,0,0,1,Cary Hill & The Village,Year Round Service (Sunday only),Southbound,horizontal
+11,2943,1,20150101,20190101,0,0,0,0,0,1,0,Cary Hill & The Village,Year Round Service (Saturday only),Southbound,horizontal
+12,2943,1,20150101,20190101,1,1,1,1,1,0,0,Cary Hill & The Village,Year Round Service (Monday-Friday),Southbound,horizontal
+13,2942,0,20150101,20190101,0,0,0,0,0,0,1,Lisa & Howard via N Quincy & Court,Year Round Service (Sunday only),Northbound,horizontal
+14,2942,0,20150101,20190101,0,0,0,0,0,1,0,Lisa & Howard via N Quincy & Court,Year Round Service (Saturday only),Northbound,horizontal
+15,2942,0,20150101,20190101,1,1,1,1,1,0,0,Lisa & Howard via N Quincy & Court,Year Round Service (Monday-Friday),Northbound,horizontal
+16,2942,1,20150101,20190101,0,0,0,0,0,0,1,Lisa & Howard via N Quincy & Court,Year Round Service (Sunday only),Southbound,horizontal
+17,2942,1,20150101,20190101,0,0,0,0,0,1,0,Lisa & Howard via N Quincy & Court,Year Round Service (Saturday only),Southbound,horizontal
+18,2942,1,20150101,20190101,1,1,1,1,1,0,0,Lisa & Howard via N Quincy & Court,Year Round Service (Monday-Friday),Southbound,horizontal
+19,2939,0,20150101,20190101,0,0,0,0,0,0,1,Massasoit via Crescent Street,Year Round Service (Sunday only),Eastbound,horizontal
+20,2939,0,20150101,20190101,0,0,0,0,0,1,0,Massasoit via Crescent Street,Year Round Service (Saturday only),Eastbound,horizontal
+21,2939,0,20150101,20190101,1,1,1,1,1,0,0,Massasoit via Crescent Street,Year Round Service (Monday-Friday),Eastbound,horizontal
+22,2939,1,20150101,20190101,0,0,0,0,0,0,1,Massasoit via Crescent Street,Year Round Service (Sunday only),Westbound,horizontal
+23,2939,1,20150101,20190101,0,0,0,0,0,1,0,Massasoit via Crescent Street,Year Round Service (Saturday only),Westbound,horizontal
+24,2939,1,20150101,20190101,1,1,1,1,1,0,0,Massasoit via Crescent Street,Year Round Service (Monday-Friday),Westbound,horizontal
+25,2945,0,20150101,20190101,0,0,0,0,0,1,0,"Mini-Maller Westgate Mall, Brockton",Year Round Service (Saturday only),Eastbound,horizontal
+26,2945,0,20150101,20190101,1,1,1,1,1,0,0,"Mini-Maller Westgate Mall, Brockton",Year Round Service (Monday-Friday),Eastbound,horizontal
+27,2945,1,20150101,20190101,0,0,0,0,0,1,0,"Mini-Maller Westgate Mall, Brockton",Year Round Service (Saturday only),Westbound,horizontal
+28,2945,1,20150101,20190101,1,1,1,1,1,0,0,"Mini-Maller Westgate Mall, Brockton",Year Round Service (Monday-Friday),Westbound,horizontal
+29,2933,0,20150101,20190101,0,0,0,0,0,0,1,Montello Street Via North Main Street,Year Round Service (Sunday only),Northbound,horizontal
+30,2933,0,20150101,20190101,0,0,0,0,0,1,0,Montello Street Via North Main Street,Year Round Service (Saturday only),Northbound,horizontal
+31,2933,0,20150101,20190101,1,1,1,1,1,0,0,Montello Street Via North Main Street,Year Round Service (Monday-Friday),Northbound,horizontal
+32,2933,1,20150101,20190101,0,0,0,0,0,0,1,Montello Street Via North Main Street,Year Round Service (Sunday only),Southbound,horizontal
+33,2933,1,20150101,20190101,0,0,0,0,0,1,0,Montello Street Via North Main Street,Year Round Service (Saturday only),Southbound,horizontal
+34,2933,1,20150101,20190101,1,1,1,1,1,0,0,Montello Street Via North Main Street,Year Round Service (Monday-Friday),Southbound,horizontal
+35,2941,0,20150101,20190101,1,1,1,1,1,0,0,Pearl via W Elm & Torrey,Year Round Service (Monday-Friday),Eastbound,horizontal
+36,2941,1,20150101,20190101,1,1,1,1,1,0,0,Pearl via W Elm & Torrey,Year Round Service (Monday-Friday),Westbound,horizontal
+37,2947,0,20150101,20190101,1,1,1,1,1,0,0,Rockland Flex,Year Round Service (Monday-Friday),Northbound,horizontal
+38,2947,1,20150101,20190101,1,1,1,1,1,0,0,Rockland Flex,Year Round Service (Monday-Friday),Southbound,horizontal
+39,3219,0,20150101,20190101,0,0,0,0,0,0,1,Routes to Boston and Beyond ,Year Round Service (Sunday only),Northbound,horizontal
+40,3219,0,20150101,20190101,0,0,0,0,0,1,0,Routes to Boston and Beyond ,Year Round Service (Saturday only),Northbound,horizontal
+41,3219,0,20150101,20190101,1,1,1,1,1,0,0,Routes to Boston and Beyond ,Year Round Service (Monday-Friday),Northbound,horizontal
+42,3219,1,20150101,20190101,0,0,0,0,0,0,1,Routes to Boston and Beyond ,Year Round Service (Sunday only),Southbound,horizontal
+43,3219,1,20150101,20190101,0,0,0,0,0,1,0,Routes to Boston and Beyond ,Year Round Service (Saturday only),Southbound,horizontal
+44,3219,1,20150101,20190101,1,1,1,1,1,0,0,Routes to Boston and Beyond ,Year Round Service (Monday-Friday),Southbound,horizontal
+45,2940,0,20150101,20190101,0,0,0,0,0,0,1,Southfield via Warren & Plain Street,Year Round Service (Sunday only),Northbound,horizontal
+46,2940,0,20150101,20190101,0,0,0,0,0,1,0,Southfield via Warren & Plain Street,Year Round Service (Saturday only),Northbound,horizontal
+47,2940,0,20150101,20190101,1,1,1,1,1,0,0,Southfield via Warren & Plain Street,Year Round Service (Monday-Friday),Northbound,horizontal
+48,2940,1,20150101,20190101,0,0,0,0,0,0,1,Southfield via Warren & Plain Street,Year Round Service (Sunday only),Southbound,horizontal
+49,2940,1,20150101,20190101,0,0,0,0,0,1,0,Southfield via Warren & Plain Street,Year Round Service (Saturday only),Southbound,horizontal
+50,2940,1,20150101,20190101,1,1,1,1,1,0,0,Southfield via Warren & Plain Street,Year Round Service (Monday-Friday),Southbound,horizontal
+51,2934,0,20150101,20190101,0,0,0,0,0,0,1,S Plaza/Campello Via Main Street,Year Round Service (Sunday only),Northbound,horizontal
+52,2934,0,20150101,20190101,0,0,0,0,0,1,0,S Plaza/Campello Via Main Street,Year Round Service (Saturday only),Northbound,horizontal
+53,2934,0,20150101,20190101,1,1,1,1,1,0,0,S Plaza/Campello Via Main Street,Year Round Service (Monday-Friday),Northbound,horizontal
+54,2934,1,20150101,20190101,0,0,0,0,0,0,1,S Plaza/Campello Via Main Street,Year Round Service (Sunday only),Southbound,horizontal
+55,2934,1,20150101,20190101,0,0,0,0,0,1,0,S Plaza/Campello Via Main Street,Year Round Service (Saturday only),Southbound,horizontal
+56,2934,1,20150101,20190101,1,1,1,1,1,0,0,S Plaza/Campello Via Main Street,Year Round Service (Monday-Friday),Southbound,horizontal
+57,2946,0,20150101,20190101,0,0,0,0,0,1,0,Stoughton via Brockton,Year Round Service (Saturday only),Eastbound,horizontal
+58,2946,0,20150101,20190101,1,1,1,1,1,0,0,Stoughton via Brockton,Year Round Service (Monday-Friday),Eastbound,horizontal
+59,2946,1,20150101,20190101,0,0,0,0,0,1,0,Stoughton via Brockton,Year Round Service (Saturday only),Westbound,horizontal
+60,2946,1,20150101,20190101,1,1,1,1,1,0,0,Stoughton via Brockton,Year Round Service (Monday-Friday),Westbound,horizontal
+61,2935,0,20150101,20190101,0,0,0,0,0,0,1,VA Hospital via Belmont,Year Round Service (Sunday only),Eastbound,horizontal
+62,2935,0,20150101,20190101,0,0,0,0,0,1,0,VA Hospital via Belmont,Year Round Service (Saturday only),Eastbound,horizontal
+63,2935,0,20150101,20190101,1,1,1,1,1,0,0,VA Hospital via Belmont,Year Round Service (Monday-Friday),Eastbound,horizontal
+64,2935,1,20150101,20190101,0,0,0,0,0,0,1,VA Hospital via Belmont,Year Round Service (Sunday only),Westbound,horizontal
+65,2935,1,20150101,20190101,0,0,0,0,0,1,0,VA Hospital via Belmont,Year Round Service (Saturday only),Westbound,horizontal
+66,2935,1,20150101,20190101,1,1,1,1,1,0,0,VA Hospital via Belmont,Year Round Service (Monday-Friday),Westbound,horizontal
+67,2935,0,20180424,20180625,1,1,1,1,1,0,0,VA Hospital via Belmont,School Calendar (Monday-Friday),Eastbound,horizontal
+68,2935,1,20180424,20180625,1,1,1,1,1,0,0,VA Hospital via Belmont,School Calendar (Monday-Friday),Westbound,horizontal
+69,2937,0,20150101,20190101,0,0,0,0,0,0,1,Westgate Mall via N Warren,Year Round Service (Sunday only),Eastbound,horizontal
+70,2937,0,20150101,20190101,0,0,0,0,0,1,0,Westgate Mall via N Warren,Year Round Service (Saturday only),Eastbound,horizontal
+71,2937,0,20150101,20190101,1,1,1,1,1,0,0,Westgate Mall via N Warren,Year Round Service (Monday-Friday),Eastbound,horizontal
+72,2937,1,20150101,20190101,0,0,0,0,0,0,1,Westgate Mall via N Warren,Year Round Service (Sunday only),Westbound,horizontal
+73,2937,1,20150101,20190101,0,0,0,0,0,1,0,Westgate Mall via N Warren,Year Round Service (Saturday only),Westbound,horizontal
+74,2937,1,20150101,20190101,1,1,1,1,1,0,0,Westgate Mall via N Warren,Year Round Service (Monday-Friday),Westbound,horizontal
+75,2936,0,20150101,20190101,0,0,0,0,0,0,1,Westgate via Pleasant,Year Round Service (Sunday only),Eastbound,horizontal
+76,2936,0,20150101,20190101,0,0,0,0,0,1,0,Westgate via Pleasant,Year Round Service (Saturday only),Eastbound,horizontal
+77,2936,0,20150101,20190101,1,1,1,1,1,0,0,Westgate via Pleasant,Year Round Service (Monday-Friday),Eastbound,horizontal
+78,2936,1,20150101,20190101,0,0,0,0,0,0,1,Westgate via Pleasant,Year Round Service (Sunday only),Westbound,horizontal
+79,2936,1,20150101,20190101,0,0,0,0,0,1,0,Westgate via Pleasant,Year Round Service (Saturday only),Westbound,horizontal
+80,2936,1,20150101,20190101,1,1,1,1,1,0,0,Westgate via Pleasant,Year Round Service (Monday-Friday),Westbound,horizontal
