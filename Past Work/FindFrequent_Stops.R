@@ -63,7 +63,8 @@ SU_id <- "Not Used"
 #YYYYMMDD
 # read_GTFS_cal(path = gtfs_path) %>% filter(end_date >= analysis_date, start_date <= analysis_date) %>% View()
 
-GTFS_Output <- import_gtfs_ql(path = gtfs_path)
+GTFS_Output <- tidytransit::read_gtfs(path = path)
+#GTFS_Output <- import_gtfs_ql(path = gtfs_path)
 
 # left_join(GTFS_Output$trips_df, GTFS_Output$stop_times_df, by = "trip_id") %>%
 #   left_join(GTFS_Output$routes_df %>% select(route_id, route_long_name, route_desc), by = "route_id") %>% 
@@ -79,7 +80,7 @@ stop_headways <- stop_headways_GTFS(path = gtfs_path,
                                 SA_id = SA_id,
                                 SU_id = SU_id)
 
-detailed_output <- freq_service_detailed(stop_headways) %>% left_join(GTFS_Output$stops_df %>% select(stop_id:stop_lon), by = "stop_id")
+detailed_output <- freq_service_detailed(stop_headways) %>% left_join(GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id")
 write_csv(detailed_output,  path = paste0("./Output/", detailedpath))
 
 summarized_output <- freq_service_summary(stop_headways) %>% left_join(GTFS_Output$stops_df %>% select(stop_id:stop_lon), by = "stop_id")
