@@ -109,3 +109,4 @@ write_csv(summarized_output, path = MW_summarypath)
 # Took the service IDs from calendar_attributes of each RTA
 # should I include school service and special holiday service?
 # Chose the most recent years for the RTAs that had multiple options
+# In some of the gtfs files there seem to be routes that aren't in the online schedule or vice versa
