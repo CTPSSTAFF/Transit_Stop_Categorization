@@ -72,7 +72,8 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
   
   # Finding stop times that are in the service schedule, joining by trip_id
   returnedGTFS$stop_times_inSch <- returnedGTFS$stop_times %>% 
-    inner_join(returnedGTFS$tripsinschedule %>% select(trip_id, service_id, DOW, route_id, direction_id), by = "trip_id") 
+    inner_join(returnedGTFS$tripsinschedule %>% select(trip_id, service_id, DOW, 
+                                                       route_id, direction_id), by = "trip_id") 
   
   # finding the stop headways
   stop_headways <- returnedGTFS$stop_times_inSch %>%
