@@ -37,7 +37,6 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
   
   # Create new table that finds trips in the service schedule that have the 
   # correct service ID (weekday, Saturday, Sunday)
-  # TO DO: For new data, make sure that the service ids are up to date. 
   returnedGTFS$tripsinschedule <- returnedGTFS$trips %>% filter(service_id %in% c(WD_id, SA_id, SU_id))
   
   # categorizing as weekday, Saturday, and Sunday
@@ -52,11 +51,11 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
   returnedGTFS$stop_times <- returnedGTFS$stop_times %>%
     # creating a column that computes the minutes after midnight of arrival to each stop
     mutate(
-      arrival_time_mam = to_minutesaftermidnight(arrival_time) 
+      arrival_time_mam = to_minutesaftermidnight(arrival_time) # HELP: Giving warnings, not sure why
     )  %>% 
     group_by(trip_id) %>% 
     # Fix missing stop times.
-    # TO DO: Find a new way to calculate time when in between big stops
+    # TO DO: Find a new way to calculate time when in between main stops
     mutate(
       distancetp = if_else(is.na(arrival_time_mam), NA_real_ , as.double(shape_dist_traveled)),
       
