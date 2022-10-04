@@ -47,7 +47,7 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
                            TRUE ~ "Err")) %>% 
     mutate(direction_id = NA) #TO DO: Might take this out, not used again
   
-  
+  ## Finding Arrival Times at Each Stop ##
   returnedGTFS$stop_times <- returnedGTFS$stop_times %>%
     # creating a column that computes the minutes after midnight of arrival to each stop
     mutate(
@@ -105,7 +105,6 @@ freq_service_detailed <- function(df) {
       span_max = if_else(DOW %in% c("WD"), 19 * 60, 18.5 * 60),
       
       # set minimum frequency for day of week
-      # TO DO: change it to frequency?  Right now it's in minutes
       # TO DO: Check out if the frequency requirements have changed
       freq_min = if_else(DOW %in% c("WD"), 15, 20),
       
