@@ -85,13 +85,13 @@ MW_SU_id <- "c42e7fe8-7703-4ecd-abf6-7ffedef656ee"
 ### Running Functions ----------------------------------------------------
 
 ## Get GTFS Data ##
-GTFS_Output <- import_gtfs(BAT_gtfs_path)
+GTFS_Output <- import_gtfs(MW_gtfs_path)
 
 ## Get Stop Headways ## 
-stop_headways <- stop_headways_GTFS(path = BAT_gtfs_path, 
-                                    WD_id = BAT_WD_id,
-                                    SA_id = BAT_SA_id,
-                                    SU_id = BAT_SU_id)
+stop_headways <- stop_headways_GTFS(path = MW_gtfs_path, 
+                                    WD_id = MW_WD_id,
+                                    SA_id = MW_SA_id,
+                                    SU_id = MW_SU_id)
 
 
 ## Get detailed information on whether each stop passes for span and/or frequency ##
@@ -108,3 +108,4 @@ write_csv(summarized_output, path = MW_summarypath)
 ### Notes -------------------------------------------------------------------
 # Took the service IDs from calendar_attributes of each RTA
 # should I include school service and special holiday service?
+# Chose the most recent years for the RTAs that had multiple options
