@@ -17,6 +17,8 @@ to_minutesaftermidnight <- function(timecolumn) {
   # day's service
   min_aft_mid <- ifelse(min_aft_mid < 180, 1440 + min_aft_mid, min_aft_mid)
   
+  print(sum(is.na(min_aft_mid)))
+  
   return(min_aft_mid)
 }
 
@@ -84,12 +86,12 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
     mutate(
       preceding_arrival = lag(arrival_time_mam),
       preceding_headway = arrival_time_mam - preceding_arrival) %>% 
-    summarize(minimumArrival_mam = min(arrival_time_mam),
-              maximumArrival_mam = max(arrival_time_mam),
-              trips = n(),
-              averageHeadway = mean(preceding_headway, na.rm = TRUE),
-              longestHeadway = max(preceding_headway, na.rm = TRUE),
-              Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
+    # summarize(minimumArrival_mam = min(arrival_time_mam),
+    #           maximumArrival_mam = max(arrival_time_mam),
+    #           trips = n(),
+    #           averageHeadway = mean(preceding_headway, na.rm = TRUE),
+    #           longestHeadway = max(preceding_headway, na.rm = TRUE),
+    #           Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
     ungroup()
   
   return(stop_headways)
