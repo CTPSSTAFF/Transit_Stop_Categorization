@@ -1,17 +1,14 @@
 library(gtfsr)
 library(tidyverse)
 library(lubridate)
-
+library(gtfstools)
 
 # Convert GTFS times into minutes after midnight.
-to_minutesaftermidnight <- function(timecolumn) {
+to_minutesaftermidnight <- function(GTFS, file, timecolumn) {
   # Convert from time format to number of minutes after midnight
-  min_aft_mid <- coalesce(
-    (hour(hms(timecolumn)) * 60 + minute(hms(timecolumn)) * 1 + second(hms(timecolumn)) / 60),
-    (hour(hm(timecolumn)) * 60 + minute(hm(timecolumn)) * 1 + second(hm(timecolumn)) / 60),
-    (hour(ymd_hms(timecolumn)) * 60 + minute(ymd_hms(timecolumn)) * 1 + second(ymd_hms(timecolumn)) / 60)
-  ) %>%
-    as.double()
+  sec_stop_time <- convert_time_to_seconds(GTFS, file = file) 
+  min_aft_mid <- sec_stop_time$stop_time$arrival_time_secs / 60
+  as.double()
   
   # If the stop is before 3 AM, add 24 hrs, since it is still part of the previous 
   # day's service
@@ -26,7 +23,7 @@ to_minutesaftermidnight <- function(timecolumn) {
 # Loading the GTFS file from the local path
 import_gtfs <- function(path) {
   
-  returnedGTFS <- tidytransit::read_gtfs(path = path)
+  returnedGTFS <- gtfstools::read_gtfs(path = path)
   
   return(returnedGTFS)
 }
@@ -53,7 +50,7 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
   returnedGTFS$stop_times <- returnedGTFS$stop_times %>%
     # creating a column that computes the minutes after midnight of arrival to each stop
     mutate(
-      arrival_time_mam = to_minutesaftermidnight(arrival_time) # HELP: Giving warnings, not sure why
+      arrival_time_mam = to_minutesaftermidnight(returnedGTFS, 'stop_times', arrival_time) # HELP: Giving warnings, not sure why
     )  %>% 
     group_by(trip_id) %>% 
     # Fix missing stop times.
@@ -86,12 +83,12 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
     mutate(
       preceding_arrival = lag(arrival_time_mam),
       preceding_headway = arrival_time_mam - preceding_arrival) %>% 
-    # summarize(minimumArrival_mam = min(arrival_time_mam),
-    #           maximumArrival_mam = max(arrival_time_mam),
-    #           trips = n(),
-    #           averageHeadway = mean(preceding_headway, na.rm = TRUE),
-    #           longestHeadway = max(preceding_headway, na.rm = TRUE),
-    #           Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
+      summarize(firstArrival_mam = min(arrival_time_mam),
+                lastArrival_mam = max(arrival_time_mam),
+                trips = n(),
+                averageHeadway = mean(preceding_headway, na.rm = TRUE),
+                longestHeadway = max(preceding_headway, na.rm = TRUE),
+                Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
     ungroup()
   
   return(stop_headways)
@@ -111,8 +108,8 @@ freq_service_detailed <- function(df) {
       freq_min = if_else(DOW %in% c("WD"), 15, 20),
       
       # passes if in the correct span
-      span_pass = minimumArrival_mam <= span_min &
-        maximumArrival_mam >= span_max,
+      span_pass = firstArrival_mam <= span_min &
+        lastArrival_mam >= span_max,
       # passes if less than minimum frequency 
       freq_pass = averageHeadway <= freq_min
     )
@@ -124,7 +121,7 @@ freq_service_summary <- function(df) {
   # get detailed information
   out <- freq_service_detailed(df) %>%
     group_by(stop_id) %>%
-    # TO DO: Ask about this
+    # Adding up the number of times a stop 'passes', for span/frequency, on weekday/weekend
     summarize(passing_values = sum(span_pass, na.rm = TRUE) + sum(freq_pass, na.rm = TRUE)) %>%
     mutate(frequent_stop = passing_values == 4)
   
@@ -132,19 +129,3 @@ freq_service_summary <- function(df) {
 }
 
 
-# Get a list of the trips for by service ID. 
-read_GTFS_cal <- function(path, WD_id, SA_id, SU_id) {
-  
-  returnedGTFS <- tidytransit::read_gtfs(path = path)
-  
-  # returnedGTFS <- gtfsr::import_gtfs(paths = path,
-  #                                    local = TRUE,
-  #                                    quiet = TRUE)
-  
-  trips_per_id <- returnedGTFS$trips_df %>% group_by(service_id) %>% summarize(n_trips = n())
-  
-  cal <- returnedGTFS$calendar_df %>% left_join(trips_per_id, by = "service_id")
-  
-  return(cal)
-  
-}

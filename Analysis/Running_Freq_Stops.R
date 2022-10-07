@@ -1,5 +1,6 @@
 source("../Functions/Frequent_Stops_Functions.R")
 library(tidyverse)
+install.packages("gtfstools")
 
 ### BAT  ----------------------------------------------------------
 
@@ -84,23 +85,30 @@ MW_SU_id <- "c42e7fe8-7703-4ecd-abf6-7ffedef656ee"
   
 ### Running Functions ----------------------------------------------------
 
+path <- BAT_gtfs_path
+WD <- BAT_WD_id
+SA <- BAT_SA_id
+SU <- BAT_SU_id
+
+
 ## Get GTFS Data ##
-GTFS_Output <- import_gtfs(BAT_gtfs_path)
+GTFS_Output <- import_gtfs(path)
 
 ## Get Stop Headways ## 
-stop_headways <- stop_headways_GTFS(path = BAT_gtfs_path, 
-                                    WD_id = BAT_WD_id,
-                                    SA_id = BAT_SA_id,
-                                    SU_id = BAT_SU_id)
-
+stop_headways <- stop_headways_GTFS(path = path, 
+                                    WD_id = WD,
+                                    SA_id = SA,
+                                    SU_id = SU)
+det <- BAT_detailedpath
+summ <- BAT_summarypath
 
 ## Get detailed information on whether each stop passes for span and/or frequency ##
 detailed_output <- freq_service_detailed(stop_headways) %>% left_join(GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id")
-write_csv(detailed_output,  path = MW_detailedpath)
+write_csv(detailed_output,  path = det)
 
 ## Summarize the detailed report into a simple report ##
 summarized_output <- freq_service_summary(stop_headways) %>% left_join(GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id")
-write_csv(summarized_output, path = MW_summarypath) 
+write_csv(summarized_output, path = summ) 
 
 
 
