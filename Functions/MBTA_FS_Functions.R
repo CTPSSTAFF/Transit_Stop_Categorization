@@ -3,7 +3,6 @@ library(tidyverse)
 library(lubridate)
 library(gtfstools)
 
-# Convert GTFS times into minutes after midnight.
 to_minutesaftermidnight <- function(GTFS, file, timecolumn) {
   # Convert from time format to number of minutes after midnight
   sec_stop_time <- convert_time_to_seconds(GTFS, file = file) 
@@ -14,24 +13,23 @@ to_minutesaftermidnight <- function(GTFS, file, timecolumn) {
   # day's service
   min_aft_mid <- ifelse(min_aft_mid < 180, 1440 + min_aft_mid, min_aft_mid)
   
-
+  
   return(min_aft_mid)
 }
 
-
 # Loading the GTFS file from the local path
-import_gtfs <- function(path) {
+import_gtfs <- function() {
   
-  returnedGTFS <- gtfstools::read_gtfs(path = path)
+  returnedGTFS <- gtfstools::read_gtfs("https://cdn.mbtace.com/archive/20220923.zip")
   
   return(returnedGTFS)
 }
 
 # Calculate the stop headway
-stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
+stop_headways_GTFS <- function(WD_id, SA_id, SU_id) {
   
   # load the gtfs data from the local path
-  returnedGTFS <- import_gtfs(path)
+  returnedGTFS <- import_gtfs()
   
   # Create new table that finds trips in the service schedule that have the 
   # correct service ID (weekday, Saturday, Sunday)
@@ -49,25 +47,9 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
   returnedGTFS$stop_times <- returnedGTFS$stop_times %>%
     # creating a column that computes the minutes after midnight of arrival to each stop
     mutate(
-      arrival_time_mam = to_minutesaftermidnight(returnedGTFS, 'stop_times', arrival_time) # HELP: Giving warnings, not sure why
-    )  %>% 
-    group_by(trip_id) %>% 
-    # Fix missing stop times.
-    # TO DO: Find a new way to calculate time when in between main stops
-    # IS THIS NECESSARY?  I don't see any NAs in the stop times
-    mutate(
-      distancetp = if_else(is.na(arrival_time_mam), NA_real_ , as.double(shape_dist_traveled)),
-      
-      last_tp = zoo::na.locf(arrival_time_mam),
-      next_tp = zoo::na.locf(arrival_time_mam, fromLast = TRUE),
-      last_dis = zoo::na.locf(distancetp),
-      next_dis = zoo::na.locf(distancetp, fromLast = TRUE),
-      # This assigns times to every stop arrival based on the distance traveled between timepoints. If every stop has an arrival time,
-      # it shouldn't do anything. 
-      arrival_time_mam_inter = (next_tp - last_tp) * ((as.double(shape_dist_traveled)- last_dis)/(next_dis - last_dis)) + last_tp,
-      arrival_time_mam = if_else(is.nan(arrival_time_mam_inter), arrival_time_mam, arrival_time_mam_inter))  %>% 
-    select(-distancetp, -last_tp, -next_tp, -last_dis, -next_dis, -arrival_time_mam_inter)
-  
+      arrival_time_mam = to_minutesaftermidnight(returnedGTFS, 'stop_times', arrival_time) 
+    )
+    
   # Finding stop times that are in the service schedule, joining by trip_id
   returnedGTFS$stop_times_inSch <- returnedGTFS$stop_times %>% 
     inner_join(returnedGTFS$tripsinschedule %>% select(trip_id, service_id, DOW, 
@@ -83,17 +65,16 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
     mutate(
       preceding_arrival = lag(arrival_time_mam),
       preceding_headway = arrival_time_mam - preceding_arrival) %>% 
-      summarize(firstArrival_mam = min(arrival_time_mam),
-                lastArrival_mam = max(arrival_time_mam),
-                trips = n(),
-                averageHeadway = mean(preceding_headway, na.rm = TRUE),
-                longestHeadway = max(preceding_headway, na.rm = TRUE),
-                Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
+    summarize(firstArrival_mam = min(arrival_time_mam),
+              lastArrival_mam = max(arrival_time_mam),
+              trips = n(),
+              averageHeadway = mean(preceding_headway, na.rm = TRUE),
+              longestHeadway = max(preceding_headway, na.rm = TRUE),
+              Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
     ungroup()
   
   return(stop_headways)
 }
-
 
 # Get detailed information on whether each stop passes for span and/or frequency
 freq_service_detailed <- function(df) {
@@ -127,5 +108,6 @@ freq_service_summary <- function(df) {
   
   return(out)
 }
+
 
 
