@@ -1,6 +1,6 @@
 source("../Functions/Frequent_Stops_Functions.R")
 library(tidyverse)
-install.packages("gtfstools")
+#install.packages("gtfstools")
 
 ### BAT  ----------------------------------------------------------
 
@@ -52,7 +52,7 @@ LRTA_summarypath <- "../Output/frequent_stops_summary_LRTA.csv"
 # Year Round starting 8/15/22
 LRTA_WD_id <- "c_67333_b_77545_d_31" 
 LRTA_SA_id <- "c_67333_b_77545_d_32"
-LATRA_SU_id <- ""
+LRTA_SU_id <- ""
 # No Sunday
   
 
@@ -85,10 +85,10 @@ MW_SU_id <- "c42e7fe8-7703-4ecd-abf6-7ffedef656ee"
   
 ### Running Functions ----------------------------------------------------
 
-path <- BAT_gtfs_path
-WD <- BAT_WD_id
-SA <- BAT_SA_id
-SU <- BAT_SU_id
+path <- MW_gtfs_path
+WD <- MW_WD_id
+SA <- MW_SA_id
+SU <- MW_SU_id
 
 
 ## Get GTFS Data ##
@@ -99,8 +99,8 @@ stop_headways <- stop_headways_GTFS(path = path,
                                     WD_id = WD,
                                     SA_id = SA,
                                     SU_id = SU)
-det <- BAT_detailedpath
-summ <- BAT_summarypath
+det <- MW_detailedpath
+summ <- MW_summarypath
 
 ## Get detailed information on whether each stop passes for span and/or frequency ##
 detailed_output <- freq_service_detailed(stop_headways) %>% left_join(GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id")
@@ -118,4 +118,6 @@ write_csv(summarized_output, path = summ)
 # should I include school service and special holiday service?
 # Chose the most recent years for the RTAs that had multiple options
 # In some of the gtfs files there seem to be routes that aren't in the online schedule or vice versa
-# WARNING: Problem while computing `arrival_time_mam = to_minutesaftermidnight(arrival_time)`.  Some strings failed to parse, or all strings are NAs 
+# WARNING: for some trips in CATA and MW there is no max or mean headway, because it is the only stop
+# on that trip.  This leads to NaN for avg headway and -Inf for longest headway
+# Only a handful of frequent stops in each RTA, if any

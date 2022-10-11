@@ -43,4 +43,7 @@ write_csv(summarized_output, path = MBTA_summary_path)
 
 
 ### NOTES ----------------------------------------------------------------------
-# Taking out the interpolation 23 warnings about na's 
+# Taking out the interpolation 
+# 23 warnings about na's- for some trips, there is no max or mean headway, because it is the only stop
+# on that trip.  This leads to NaN for avg headway and -Inf for longest headway
+# 911 frequent stops in the MBTA

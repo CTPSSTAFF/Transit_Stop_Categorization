@@ -83,12 +83,12 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
     mutate(
       preceding_arrival = lag(arrival_time_mam),
       preceding_headway = arrival_time_mam - preceding_arrival) %>% 
-      summarize(firstArrival_mam = min(arrival_time_mam),
-                lastArrival_mam = max(arrival_time_mam),
-                trips = n(),
-                averageHeadway = mean(preceding_headway, na.rm = TRUE),
-                longestHeadway = max(preceding_headway, na.rm = TRUE),
-                Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
+    summarize(firstArrival_mam = min(arrival_time_mam),
+              lastArrival_mam = max(arrival_time_mam),
+              trips = n(),
+              averageHeadway = mean(preceding_headway, na.rm = TRUE),
+              longestHeadway = max(preceding_headway, na.rm = TRUE),
+              Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
     ungroup()
   
   return(stop_headways)
