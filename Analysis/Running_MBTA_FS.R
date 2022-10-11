@@ -1,5 +1,7 @@
 source("../Functions/MBTA_FS_Functions.R")
 library(tidyverse)
+library(sf)
+library(mapview)
 
 ### MBTA -----------------------------------------------------------------------
 
@@ -41,6 +43,14 @@ write_csv(detailed_output,  path = MBTA_detailed_path)
 summarized_output <- freq_service_summary(stop_headways) %>% left_join(MBTA_gtfs$stops %>% select(stop_id:stop_lon), by = "stop_id")
 write_csv(summarized_output, path = MBTA_summary_path) 
 
+
+
+## Mapping the frequent stops##
+stops_geo <- st_as_sf(summarized_output, coords= c("stop_lon", "stop_lat")) %>% 
+  st_set_crs(4326) %>%
+  st_transform(26986)
+
+mapview(stops_geo, zcol = 'frequent_stop')
 
 ### NOTES ----------------------------------------------------------------------
 # Taking out the interpolation 
