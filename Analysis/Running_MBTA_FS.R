@@ -9,6 +9,8 @@ library(mapview)
 
 MBTA_gtfs <- import_gtfs()
 
+# TO DO: service_schedule_name
+# notmodified 
 
 MBTA_detailed_path <- "../Output/frequent_stops_detail_MBTA.csv"
 MBTA_summary_path <- "../Output/frequent_stops_summary_MBTA.csv"
@@ -46,7 +48,9 @@ write_csv(summarized_output, path = MBTA_summary_path)
 
 
 ## Mapping the frequent stops##
-stops_geo <- st_as_sf(summarized_output, coords= c("stop_lon", "stop_lat")) %>% 
+stops_geo <- summarized_output %>%
+  filter(frequent_stop == TRUE) %>%
+  st_as_sf(coords= c("stop_lon", "stop_lat")) %>% 
   st_set_crs(4326) %>%
   st_transform(26986)
 
