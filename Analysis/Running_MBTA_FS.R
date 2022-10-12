@@ -10,21 +10,21 @@ library(mapview)
 MBTA_gtfs <- import_gtfs()
 
 # TO DO: service_schedule_name
-# notmodified 
+# not modified 
 
 MBTA_detailed_path <- "../Output/frequent_stops_detail_MBTA.csv"
 MBTA_summary_path <- "../Output/frequent_stops_summary_MBTA.csv"
 
 WD <- MBTA_gtfs$calendar_attributes %>%
-  filter(service_schedule_type == 'Weekday')
+  filter(service_schedule_name == 'Weekday')
 MBTA_WD_id <- WD$service_id
 
 SA <- MBTA_gtfs$calendar_attributes %>%
-  filter(service_schedule_type == 'Saturday')
+  filter(service_schedule_name == 'Saturday')
 MBTA_SA_id <- SA$service_id
 
 SU <- MBTA_gtfs$calendar_attributes %>%
-  filter(service_schedule_type == 'Sunday')
+  filter(service_schedule_name == 'Sunday')
 MBTA_SU_id <- SU$service_id
 
 
