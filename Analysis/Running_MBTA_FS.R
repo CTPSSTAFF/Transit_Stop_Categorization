@@ -15,8 +15,12 @@ MBTA_gtfs <- import_gtfs()
 MBTA_detailed_path <- "../Output/frequent_stops_detail_MBTA.csv"
 MBTA_summary_path <- "../Output/frequent_stops_summary_MBTA.csv"
 
+weekdays <- MBTA_gtfs$calendar %>%
+  filter(thursday == 1)
+
 WD <- MBTA_gtfs$calendar_attributes %>%
-  filter(service_schedule_name == 'Weekday')
+  filter(service_schedule_name == 'Weekday') %>%  # Still Getting Duplicates (BUS422)
+  filter(service_id %in% weekdays$service_id)
 MBTA_WD_id <- WD$service_id
 
 SA <- MBTA_gtfs$calendar_attributes %>%
