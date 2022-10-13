@@ -12,23 +12,40 @@ MBTA_gtfs <- import_gtfs()
 # TO DO: service_schedule_name
 # not modified 
 
+special_dates <- MBTA_gtfs$calendar_dates$service_id
+
+non_special_cal<- MBTA_gtfs$calendar_attributes %>%
+  filter(!(service_id %in% special_dates))
+
+
 MBTA_detailed_path <- "../Output/frequent_stops_detail_MBTA.csv"
 MBTA_summary_path <- "../Output/frequent_stops_summary_MBTA.csv"
 
 weekdays <- MBTA_gtfs$calendar %>%
-  filter(thursday == 1)
+  filter(thursday == 1) %>%
+  filter(friday == 1)
+  
 
 WD <- MBTA_gtfs$calendar_attributes %>%
-  filter(service_schedule_name == 'Weekday') %>%  # Still Getting Duplicates (BUS422)
-  filter(service_id %in% weekdays$service_id)
+  filter(service_schedule_name == 'Weekday') %>%  
+  filter(service_id %in% weekdays$service_id) %>%
+  filter(rating_description == 'Fall') # Took out Summer/Spring, even though some had fall dates 
 MBTA_WD_id <- WD$service_id
 
+# BUS422-hbs42sw1-Wdy-02: mon-fri
+# BUS422-hbc42wk1-Wdy-02: mon-thurs
+# BUS422-hbc42fr1-Wdy-02: fri
+
+
+
 SA <- MBTA_gtfs$calendar_attributes %>%
-  filter(service_schedule_name == 'Saturday')
+  filter(service_schedule_name == 'Saturday') %>%
+  filter(rating_description == 'Fall')
 MBTA_SA_id <- SA$service_id
 
 SU <- MBTA_gtfs$calendar_attributes %>%
-  filter(service_schedule_name == 'Sunday')
+  filter(service_schedule_name == 'Sunday') %>%
+  filter(rating_description == 'Fall')
 MBTA_SU_id <- SU$service_id
 
 

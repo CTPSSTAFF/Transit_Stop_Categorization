@@ -57,7 +57,7 @@ stop_headways_GTFS <- function(WD_id, SA_id, SU_id) {
   
   # finding the stop headways
   stop_headways <- returnedGTFS$stop_times_inSch %>%
-    group_by(DOW, stop_id) %>% 
+    group_by(DOW, stop_id) %>% #Maybe also service_id?
     arrange(stop_id, DOW, arrival_time_mam) %>% 
     filter(pickup_type == 0) %>% #select regularly scheduled pickups
     # Summarizing to use in determining a frequent stop
