@@ -123,7 +123,7 @@ freq_service_summary <- function(df) {
     group_by(stop_id) %>%
     # Adding up the number of times a stop 'passes', for span/frequency, on weekday/weekend
     summarize(passing_values = sum(span_pass, na.rm = TRUE) + sum(freq_pass, na.rm = TRUE)) %>%
-    mutate(frequent_stop = passing_values == 4)
+    mutate(frequent_stop = passing_values >= 4)  # Changed to at least 4
   
   return(out)
 }

@@ -3,33 +3,56 @@ library(tidyverse)
 library(sf)
 library(mapview)
 
-### MBTA -----------------------------------------------------------------------
+### MBTA Service IDs -----------------------------------------------------------
 
 # 20220923,20220928,"Fall 2022, 2022-09-30T22:53:11+00:00, version D"
 
 MBTA_gtfs <- import_gtfs()
 
-# TO DO: service_schedule_name
-# not modified 
 
-special_dates <- MBTA_gtfs$calendar_dates$service_id
+trips <- MBTA_gtfs$trips
+stop_times <- MBTA_gtfs$stop_times
+cal <- MBTA_gtfs$calendar
+cal_att <- MBTA_gtfs$calendar_attributes
 
-non_special_cal<- MBTA_gtfs$calendar_attributes %>%
-  filter(!(service_id %in% special_dates))
+# 
+# # TO DO: service_schedule_name
+# # not modified 
+# 
+# special_dates <- MBTA_gtfs$calendar_dates$service_id
+# 
+# non_special_cal<- MBTA_gtfs$calendar_attributes %>%
+#   filter(!(service_id %in% special_dates))
+
+# weekdays <- MBTA_gtfs$calendar %>%
+#   filter(thursday == 1) %>%
+#   filter(friday == 1)
 
 
-MBTA_detailed_path <- "../Output/frequent_stops_detail_MBTA.csv"
-MBTA_summary_path <- "../Output/frequent_stops_summary_MBTA.csv"
 
-weekdays <- MBTA_gtfs$calendar %>%
-  filter(thursday == 1) %>%
-  filter(friday == 1)
-  
 
-WD <- MBTA_gtfs$calendar_attributes %>%
-  filter(service_schedule_name == 'Weekday') %>%  
-  filter(service_id %in% weekdays$service_id) %>%
-  filter(rating_description == 'Fall') # Took out Summer/Spring, even though some had fall dates 
+## All Relevant Service IDs ##
+# join dates 
+cal_att_dates_fixed <- cal_att %>% 
+  full_join(cal, by = "service_id")
+# Change date format
+cal_att_dates_fixed$start_date <- gsub("-", "", cal_att_dates_fixed$start_date) %>%
+  as.double()
+cal_att_dates_fixed$end_date <- gsub("-", "", cal_att_dates_fixed$end_date)%>%
+  as.double()
+# Filter to relevant IDs
+cl_att_RTL <- cal_att_dates_fixed %>%
+  filter(str_detect(service_id, "RTL") & service_schedule_typicality == 1)
+
+cal_att_filt <- cal_att_dates_fixed %>%
+  filter(start_date <= 20221008 & end_date >= 20221008) %>% 
+  bind_rows(cl_att_RTL) %>%
+  filter(wednesday == 1 | saturday == 1 | sunday == 1) %>%
+  distinct()
+
+
+WD <- cal_att_filt %>%
+ filter(wednesday == 1)
 MBTA_WD_id <- WD$service_id
 
 # BUS422-hbs42sw1-Wdy-02: mon-fri
@@ -37,15 +60,12 @@ MBTA_WD_id <- WD$service_id
 # BUS422-hbc42fr1-Wdy-02: fri
 
 
-
-SA <- MBTA_gtfs$calendar_attributes %>%
-  filter(service_schedule_name == 'Saturday') %>%
-  filter(rating_description == 'Fall')
+SA <-  cal_att_filt %>%
+  filter(saturday == 1)
 MBTA_SA_id <- SA$service_id
 
-SU <- MBTA_gtfs$calendar_attributes %>%
-  filter(service_schedule_name == 'Sunday') %>%
-  filter(rating_description == 'Fall')
+SU <-  cal_att_filt %>%
+  filter(sunday == 1)
 MBTA_SU_id <- SU$service_id
 
 
@@ -57,6 +77,8 @@ stop_headways <- stop_headways_GTFS(WD_id = MBTA_WD_id,
                                     SU_id = MBTA_SU_id)
 
 
+MBTA_detailed_path <- "../Output/frequent_stops_detail_MBTA.csv"
+MBTA_summary_path <- "../Output/frequent_stops_summary_MBTA.csv"
 
 ## Get detailed information on whether each stop passes for span and/or frequency ##
 detailed_output <- freq_service_detailed(stop_headways) %>% left_join(MBTA_gtfs$stops %>% select(stop_id:stop_lon), by = "stop_id")
