@@ -93,6 +93,7 @@ write_csv(summarized_output, path = MBTA_summary_path)
 ## Mapping the frequent stops##
 stops_geo <- summarized_output %>%
   filter(frequent_stop == TRUE) %>%
+  #filter(passing_values >=5) %>%
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% 
   st_set_crs(4326) %>%
   st_transform(26986)

@@ -85,10 +85,10 @@ MW_SU_id <- "c42e7fe8-7703-4ecd-abf6-7ffedef656ee"
   
 ### Running Functions ----------------------------------------------------
 
-path <- BAT_gtfs_path
-WD <- BAT_WD_id
-SA <- BAT_SA_id
-SU <- BAT_SU_id
+path <- MW_gtfs_path
+WD <- MW_WD_id
+SA <- MW_SA_id
+SU <- MW_SU_id
 
 
 ## Get GTFS Data ##
@@ -99,8 +99,8 @@ stop_headways <- stop_headways_GTFS(path = path,
                                     WD_id = WD,
                                     SA_id = SA,
                                     SU_id = SU)
-det <- BAT_detailedpath
-summ <- BAT_summarypath
+det <- MW_detailedpath
+summ <- MW_summarypath
 
 ## Get detailed information on whether each stop passes for span and/or frequency ##
 detailed_output <- freq_service_detailed(stop_headways) %>% left_join(GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id")
