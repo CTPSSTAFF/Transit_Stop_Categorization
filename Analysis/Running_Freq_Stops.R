@@ -2,6 +2,8 @@ source("../Functions/Frequent_Stops_Functions.R")
 library(tidyverse)
 #install.packages("gtfstools")
 
+# TO DO: Might want to include more service IDs
+
 ### BAT  ----------------------------------------------------------
 
 BAT_gtfs_path <- "../GTFS_data/brockton-ma-us.zip"
