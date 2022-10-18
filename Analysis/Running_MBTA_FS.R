@@ -14,6 +14,7 @@ trips <- MBTA_gtfs$trips
 stop_times <- MBTA_gtfs$stop_times
 cal <- MBTA_gtfs$calendar
 cal_att <- MBTA_gtfs$calendar_attributes
+stop_time_by_trip <- left_join(trips, stop_times, by = "trip_id")
 
 # 
 # # TO DO: service_schedule_name
@@ -49,6 +50,7 @@ cal_att_filt <- cal_att_dates_fixed %>%
   bind_rows(cl_att_RTL) %>%
   filter(wednesday == 1 | saturday == 1 | sunday == 1) %>%
   distinct()
+stop_time_by_trip_filter <- stop_time_by_trip |> filter(service_id %in% cal_att_filt$service_id) 
 
 
 WD <- cal_att_filt %>%
