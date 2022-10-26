@@ -87,13 +87,13 @@ freq_service_detailed <- function(df) {
       
       # set minimum frequency for day of week
       # TO DO: Check out if the frequency requirements have changed
-      freq_min = if_else(DOW %in% c("WD"), 7.5, 10),
+      freq_min = if_else(DOW %in% c("WD"), 15, 20), #or half of that
       
       # passes if in the correct span
       span_pass = firstArrival_mam <= span_min &
         lastArrival_mam >= span_max,
       # passes if less than minimum frequency 
-      freq_pass = AWT <= freq_min
+      freq_pass = averageHeadway <= freq_min #Or AWT
     )
   return(out)
 }

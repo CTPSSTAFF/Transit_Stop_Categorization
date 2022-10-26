@@ -107,6 +107,6 @@ mapview(stops_geo, zcol = 'frequent_stop')
 # 23 warnings about na's- for some trips, there is no max or mean headway, because it is the only stop
 # on that trip.  This leads to NaN for avg headway and -Inf for longest headway
 # 911 frequent stops in the MBTA
-# Using Average Headway, there are 1676 frequent stops
+# Using Average Headway, there are 1671 frequent stops
 # Using AWT with half the headway threshold, there are 1225 frequent stops
 # The previous time this analysis was run, there were 1596 frequent stops
