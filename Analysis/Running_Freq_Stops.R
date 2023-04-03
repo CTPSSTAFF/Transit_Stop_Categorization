@@ -1,4 +1,4 @@
-source("../Functions/Frequent_Stops_Functions.R")
+source("Functions/Frequent_Stops_Functions.R")
 library(tidyverse)
 #install.packages("gtfstools")
 
@@ -27,9 +27,9 @@ library(tidyverse)
 
 ### BAT  ----------------------------------------------------------
 
-BAT_gtfs_path <- "../GTFS_data/brockton-ma-us.zip"
-BAT_detailedpath <- "../Output/frequent_stops_detail_BAT.csv"
-BAT_summarypath <- "../Output/frequent_stops_summary_BAT.csv"
+BAT_gtfs_path <- "GTFS_data/brockton-ma-us.zip"
+BAT_detailedpath <- "Output/frequent_stops_detail_BAT.csv"
+BAT_summarypath <- "Output/frequent_stops_summary_BAT.csv"
 #GTFS_Output <- import_gtfs(BAT_gtfs_path)
 
 
@@ -54,9 +54,9 @@ BAT_SU_id <- "c_21163_b_29144_d_64"
   
 ### CATA  ----------------------------------------------------------
 
-CATA_gtfs_path <- "../GTFS_data/capeann-ma-us.zip"
-CATA_detailedpath <- "../Output/frequent_stops_detail_CATA.csv"
-CATA_summarypath <- "../Output/frequent_stops_summary_CATA.csv"
+CATA_gtfs_path <- "GTFS_data/capeann-ma-us.zip"
+CATA_detailedpath <- "Output/frequent_stops_detail_CATA.csv"
+CATA_summarypath <- "Output/frequent_stops_summary_CATA.csv"
 #GTFS_Output <- import_gtfs(CATA_gtfs_path)
 
 # Year Round starting 2/21/22 weekday and saturday
@@ -83,9 +83,9 @@ CATA_SU_id <- ""
   
 ### GATRA  ----------------------------------------------------------
 
-GATRA_gtfs_path <- "../GTFS_data/gatra-ma-us.zip"
-GATRA_detailedpath <- "../Output/frequent_stops_detail_GATRA.csv"
-GATRA_summarypath <- "../Output/frequent_stops_summary_GATRA.csv"
+GATRA_gtfs_path <- "GTFS_data/gatra-ma-us.zip"
+GATRA_detailedpath <- "Output/frequent_stops_detail_GATRA.csv"
+GATRA_summarypath <- "Output/frequent_stops_summary_GATRA.csv"
 #GTFS_Output <- import_gtfs(GATRA_gtfs_path)
 
 # Year Round starting 10/3/22
@@ -99,9 +99,9 @@ GATRA_SU_id <- ""
   
 ### LRTA  ----------------------------------------------------------
 
-LRTA_gtfs_path <- "../GTFS_data/lowell-ma-us.zip"
-LRTA_detailedpath <- "../Output/frequent_stops_detail_LRTA.csv"
-LRTA_summarypath <- "../Output/frequent_stops_summary_LRTA.csv"
+LRTA_gtfs_path <- "GTFS_data/lowell-ma-us.zip"
+LRTA_detailedpath <- "Output/frequent_stops_detail_LRTA.csv"
+LRTA_summarypath <- "Output/frequent_stops_summary_LRTA.csv"
 #GTFS_Output <- import_gtfs(LRTA_gtfs_path)
 
 # Year Round starting 8/15/22
@@ -113,9 +113,9 @@ LRTA_SU_id <- ""
 
 ### Merrimack Valley  -----------------------------------------------------
 
-MVRTA_gtfs_path <- "../GTFS_data/merrimackvalley-ma-us.zip"
-MVRTA_detailedpath <- "../Output/frequent_stops_detail_MVRTA.csv"
-MVRTA_summarypath <- "../Output/frequent_stops_summary_MVRTA.csv"
+MVRTA_gtfs_path <- "GTFS_data/merrimackvalley-ma-us.zip"
+MVRTA_detailedpath <- "Output/frequent_stops_detail_MVRTA.csv"
+MVRTA_summarypath <- "Output/frequent_stops_summary_MVRTA.csv"
 #GTFS_Output <- import_gtfs(MVRTA_gtfs_path)
 
 # Using Year Round starting 9/6/22 
@@ -129,9 +129,9 @@ MVRTA_SU_id <- ""
 # Downloaded from https://transitfeeds.com/p/massdot/101
 # For 6 September 2022
 
-MW_gtfs_path <- "../GTFS_data/metrowest-ma-us.zip"
-MW_detailedpath <- "../Output/frequent_stops_detail_MW.csv"
-MW_summarypath <- "../Output/frequent_stops_summary_MW.csv"
+MW_gtfs_path <- "GTFS_data/metrowest-ma-us.zip"
+MW_detailedpath <- "Output/frequent_stops_detail_MW.csv"
+MW_summarypath <- "Output/frequent_stops_summary_MW.csv"
 #GTFS_Output <- import_gtfs(MW_gtfs_path)
 
 # Chosen by using 9/30/22-10/01/22-10/02/22
@@ -142,10 +142,10 @@ MW_SU_id <- "c42e7fe8-7703-4ecd-abf6-7ffedef656ee"
   
 ### Running Functions ----------------------------------------------------
 
-path <- MW_gtfs_path
-WD <- MW_WD_id
-SA <- MW_SA_id
-SU <- MW_SU_id
+path <- BAT_gtfs_path
+WD <- BAT_WD_id
+SA <- BAT_SA_id
+SU <- BAT_SU_id
 
 
 ## Get GTFS Data ##
@@ -156,8 +156,8 @@ stop_headways <- stop_headways_GTFS(path = path,
                                     WD_id = WD,
                                     SA_id = SA,
                                     SU_id = SU)
-det <- MW_detailedpath
-summ <- MW_summarypath
+det <- BAT_detailedpath
+summ <- BAT_summarypath
 
 ## Get detailed information on whether each stop passes for span and/or frequency ##
 detailed_output <- freq_service_detailed(stop_headways) %>% left_join(GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id")

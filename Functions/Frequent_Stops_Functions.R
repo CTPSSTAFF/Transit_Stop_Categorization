@@ -72,6 +72,7 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
   returnedGTFS$stop_times_inSch <- returnedGTFS$stop_times %>% 
     inner_join(returnedGTFS$tripsinschedule %>% select(trip_id, service_id, DOW, 
                                                        route_id, direction_id), by = "trip_id") 
+
   
   # finding the stop headways
   stop_headways <- returnedGTFS$stop_times_inSch %>%
@@ -83,12 +84,13 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
     mutate(
       preceding_arrival = lag(arrival_time_mam),
       preceding_headway = arrival_time_mam - preceding_arrival) %>% 
-    summarize(firstArrival_mam = min(arrival_time_mam),
-              lastArrival_mam = max(arrival_time_mam),
-              trips = n(),
-              averageHeadway = mean(preceding_headway, na.rm = TRUE),
-              longestHeadway = max(preceding_headway, na.rm = TRUE),
-              Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
+    # summarize(firstArrival_mam = min(arrival_time_mam),
+    #           lastArrival_mam = max(arrival_time_mam),
+    #           trips = n(),
+    #           averageHeadway = mean(preceding_headway, na.rm = TRUE),
+    #           longestHeadway = max(preceding_headway, na.rm = TRUE),
+    #           Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE),
+    #           expected_wait_time = sum(preceding_headway ^ 2, na.rm = TRUE) / sum(preceding_headway, na.rm = TRUE) ) %>%
     ungroup()
   
   return(stop_headways)
@@ -111,7 +113,7 @@ freq_service_detailed <- function(df) {
       span_pass = firstArrival_mam <= span_min &
         lastArrival_mam >= span_max,
       # passes if less than minimum frequency 
-      freq_pass = averageHeadway <= freq_min
+      freq_pass = expected_wait_time <= freq_min
     )
   return(out)
 }
