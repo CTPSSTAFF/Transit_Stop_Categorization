@@ -3,14 +3,14 @@ library(tidyverse)
 #install.packages("gtfstools")
 
 # TO DO: Might want to include more service IDs
-# trips <- GTFS_Output$trips
-# 
-# stop_times <- GTFS_Output$stop_times
-# cal <- GTFS_Output$calendar
-# cal_att <- GTFS_Output$calendar_attributes
-# # 
-# stop_time_by_trip <- left_join(trips, stop_times, by = "trip_id")
-# # 
+trips <- GTFS_Output$trips
+
+stop_times <- GTFS_Output$stop_times
+cal <- GTFS_Output$calendar
+cal_att <- GTFS_Output$calendar_attributes
+#
+stop_time_by_trip <- left_join(trips, stop_times, by = "trip_id")
+# #
 # cal_att_dates_fixed <- cal_att %>%
 #   full_join(cal, by = "service_id")
 # 
@@ -19,13 +19,13 @@ library(tidyverse)
 # 
 # cal_att_dates_fixed$end_date <- gsub("-", "", cal_att_dates_fixed$end_date)%>%
 #   as.double()
-# # 
-# # 
+# #
+# #
 # cal_att_filt <- cal_att_dates_fixed %>%
 #   filter(start_date <= 20221008 & end_date >= 20221008) %>%
 #   filter(wednesday == 1 | saturday == 1 | sunday == 1) %>%
 #   distinct()
-# # 
+# #
 # stop_time_by_trip_filter <- stop_time_by_trip |> filter(service_id %in% CATA_WD_id) 
 
 ### BAT  ----------------------------------------------------------
@@ -93,13 +93,12 @@ GTFS_Output <- import_gtfs(GATRA_gtfs_path)
 
 # Year Round starting 10/3/22
 # Weekday MWThF and Tuesday 
-GATRA_WD_id <- c( "c_67596_b_78143_d_29", "c_67596_b_78143_d_2") # year-round MWThF, year-round Tues
+GATRA_WD_id <- c( "c_67596_b_78143_d_31") # year-round 
 # only "weekend", not divided as saturday and sunday
 GATRA_SA_id <- "c_67596_b_78143_d_96"
 GATRA_SU_id <- ""
 
 
-  
 ### LRTA  ----------------------------------------------------------
 
 LRTA_gtfs_path <- "GTFS_data/lowell-ma-us.zip"
@@ -198,34 +197,35 @@ MW_detailed_output <- freq_service_detailed(MW_stop_headways) %>% left_join(MW_G
 ## Summarize the detailed report into a simple report ##
 BAT_summarized_output <- freq_service_summary(BAT_stop_headways) %>% left_join(BAT_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
-  mutate(RTA = "BAT") %>% select(stop_id, passing_values, frequent_stop, geometry, RTA)
+  mutate(RTA = "BAT") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
 
 CATA_summarized_output <- freq_service_summary(CATA_stop_headways) %>% left_join(CATA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
-  mutate(RTA = "CATA") %>% select(stop_id, passing_values, frequent_stop, geometry, RTA)
+  mutate(RTA = "CATA") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
 
 GATRA_summarized_output <- freq_service_summary(GATRA_stop_headways) %>% left_join(GATRA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
-  mutate(RTA = "GATRA") %>% select(stop_id, passing_values, frequent_stop, geometry, RTA)
+  mutate(RTA = "GATRA") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
 
 LRTA_summarized_output <- freq_service_summary(LRTA_stop_headways) %>% left_join(LRTA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
-  mutate(RTA = "LRTA") %>% select(stop_id, passing_values, frequent_stop, geometry, RTA)
+  mutate(RTA = "LRTA") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
 
 MVRTA_summarized_output <- freq_service_summary(MVRTA_stop_headways) %>% left_join(MVRTA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
-  mutate(RTA = "MVRTA") %>% select(stop_id, passing_values, frequent_stop, geometry, RTA)
+  mutate(RTA = "MVRTA") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
 
 MW_summarized_output <- freq_service_summary(MW_stop_headways) %>% left_join(MW_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
-  mutate(RTA = "MW") %>% select(stop_id, passing_values, frequent_stop, geometry, RTA)
+  mutate(RTA = "MW") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
 
 RTA_frequent_summary <- rbind(BAT_summarized_output, CATA_summarized_output, GATRA_summarized_output, LRTA_summarized_output, MVRTA_summarized_output, MW_summarized_output)
 
-mapview::mapview(RTA_frequent_summary, zcol = "frequent_stop")
+mapview::mapview(RTA_frequent_summary, zcol = "RTA")
 
+st_write(RTA_frequent_summary, "Output/RTA_frequent_summary.shp")
 
-write_csv(summarized_output, path = summ) 
+#write_csv(summarized_output, path = summ) 
 
 
 ### Notes -------------------------------------------------------------------
