@@ -3,13 +3,13 @@ library(tidyverse)
 #install.packages("gtfstools")
 
 # TO DO: Might want to include more service IDs
-trips <- GTFS_Output$trips
-
-stop_times <- GTFS_Output$stop_times
-cal <- GTFS_Output$calendar
-cal_att <- GTFS_Output$calendar_attributes
-#
-stop_time_by_trip <- left_join(trips, stop_times, by = "trip_id")
+# trips <- GTFS_Output$trips
+# 
+# stop_times <- GTFS_Output$stop_times
+# cal <- GTFS_Output$calendar
+# cal_att <- GTFS_Output$calendar_attributes
+# #
+# stop_time_by_trip <- left_join(trips, stop_times, by = "trip_id")
 # #
 # cal_att_dates_fixed <- cal_att %>%
 #   full_join(cal, by = "service_id")
