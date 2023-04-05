@@ -27,6 +27,7 @@ MBTA_freq_summary <- full_join(WD_freq_summ,SA_freq_summ ) %>%
   mutate(MBTA_frequent_stop = case_when(WD_frequent_stop == TRUE & SA_frequent_stop == TRUE ~ TRUE, .default = FALSE) ) %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986)
   
+st_write(MBTA_freq_summary, "Output/MBTA_freq_summary.shp")
 
 
          
