@@ -31,8 +31,8 @@ library(tidyverse)
 ### BAT  ----------------------------------------------------------
 
 BAT_gtfs_path <- "GTFS_data/brockton-ma-us.zip"
-BAT_detailedpath <- "Output/frequent_stops_detail_BAT.csv"
-BAT_summarypath <- "Output/frequent_stops_summary_BAT.csv"
+BAT_detailedpath <- "Output/Detailed_RTA/frequent_stops_detail_BAT.csv"
+BAT_summarypath <- "Output/Summary_RTA/frequent_stops_summary_BAT.csv"
 #GTFS_Output <- import_gtfs(BAT_gtfs_path)
 
 
@@ -58,8 +58,8 @@ BAT_SA_id <- "c_21163_b_29144_d_32"
 ### CATA  ----------------------------------------------------------
 
 CATA_gtfs_path <- "GTFS_data/capeann-ma-us.zip"
-CATA_detailedpath <- "Output/frequent_stops_detail_CATA.csv"
-CATA_summarypath <- "Output/frequent_stops_summary_CATA.csv"
+CATA_detailedpath <- "Output/Detailed_RTA/frequent_stops_detail_CATA.csv"
+CATA_summarypath <- "Output/Summary_RTA/frequent_stops_summary_CATA.csv"
 GTFS_Output <- import_gtfs(CATA_gtfs_path)
 
 # Year Round starting 2/21/22 weekday and saturday
@@ -87,8 +87,8 @@ CATA_SU_id <- ""
 ### GATRA  ----------------------------------------------------------
 
 GATRA_gtfs_path <- "GTFS_data/gatra-ma-us.zip"
-GATRA_detailedpath <- "Output/frequent_stops_detail_GATRA.csv"
-GATRA_summarypath <- "Output/frequent_stops_summary_GATRA.csv"
+GATRA_detailedpath <- "Output/Detailed_RTA/frequent_stops_detail_GATRA.csv"
+GATRA_summarypath <- "Output/Summary_RTA/frequent_stops_summary_GATRA.csv"
 GTFS_Output <- import_gtfs(GATRA_gtfs_path)
 
 # Year Round starting 10/3/22
@@ -102,8 +102,8 @@ GATRA_SU_id <- ""
 ### LRTA  ----------------------------------------------------------
 
 LRTA_gtfs_path <- "GTFS_data/lowell-ma-us.zip"
-LRTA_detailedpath <- "Output/frequent_stops_detail_LRTA.csv"
-LRTA_summarypath <- "Output/frequent_stops_summary_LRTA.csv"
+LRTA_detailedpath <- "Output/Detailed_RTA/frequent_stops_detail_LRTA.csv"
+LRTA_summarypath <- "Output/Summary_RTA/frequent_stops_summary_LRTA.csv"
 GTFS_Output <- import_gtfs(LRTA_gtfs_path)
 
 # Year Round starting 8/15/22
@@ -116,8 +116,8 @@ LRTA_SU_id <- ""
 ### Merrimack Valley  -----------------------------------------------------
 
 MVRTA_gtfs_path <- "GTFS_data/merrimackvalley-ma-us.zip"
-MVRTA_detailedpath <- "Output/frequent_stops_detail_MVRTA.csv"
-MVRTA_summarypath <- "Output/frequent_stops_summary_MVRTA.csv"
+MVRTA_detailedpath <- "Output/Detailed_RTA/frequent_stops_detail_MVRTA.csv"
+MVRTA_summarypath <- "Output/Summary_RTA/frequent_stops_summary_MVRTA.csv"
 GTFS_Output <- import_gtfs(MVRTA_gtfs_path)
 
 # Using Year Round starting 9/6/22 
@@ -132,8 +132,8 @@ MVRTA_SU_id <- ""
 # For 6 September 2022
 
 MW_gtfs_path <- "GTFS_data/metrowest-ma-us.zip"
-MW_detailedpath <- "Output/frequent_stops_detail_MW.csv"
-MW_summarypath <- "Output/frequent_stops_summary_MW.csv"
+MW_detailedpath <- "Output/Detailed_RTA/frequent_stops_detail_MW.csv"
+MW_summarypath <- "Output/Summary_RTA/frequent_stops_summary_MW.csv"
 GTFS_Output <- import_gtfs(MW_gtfs_path)
 
 # Chosen by using 9/30/22-10/01/22-10/02/22
@@ -169,28 +169,30 @@ MVRTA_stop_headways <- stop_headways_GTFS(path = MVRTA_gtfs_path, WD_id = MVRTA_
 MW_stop_headways <- stop_headways_GTFS(path = MW_gtfs_path, WD_id = MW_WD_id, SA_id = MW_SA_id)
 
 
-
-# det <- BAT_detailedpath
-# summ <- BAT_summarypath
-
 ## Get detailed information on whether each stop passes for span and/or frequency ##
 BAT_detailed_output <- freq_service_detailed(BAT_stop_headways) %>% left_join(BAT_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986)
+write.csv(BAT_detailed_output, BAT_detailedpath)
 
 CATA_detailed_output <- freq_service_detailed(CATA_stop_headways) %>% left_join(CATA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986)
+write.csv(CATA_detailed_output, CATA_detailedpath)
 
 GATRA_detailed_output <- freq_service_detailed(GATRA_stop_headways) %>% left_join(GATRA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986)
+write.csv(GATRA_detailed_output, GATRA_detailedpath)
 
 LRTA_detailed_output <- freq_service_detailed(LRTA_stop_headways) %>% left_join(LRTA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986)
+write.csv(LRTA_detailed_output, LRTA_detailedpath)
 
 MVRTA_detailed_output <- freq_service_detailed(MVRTA_stop_headways) %>% left_join(MVRTA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986)
+write.csv(MVRTA_detailed_output, MVRTA_detailedpath)
 
 MW_detailed_output <- freq_service_detailed(MW_stop_headways) %>% left_join(MW_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986)
+write.csv(MW_detailed_output, MW_detailedpath)
 
 
 
@@ -198,26 +200,32 @@ MW_detailed_output <- freq_service_detailed(MW_stop_headways) %>% left_join(MW_G
 BAT_summarized_output <- freq_service_summary(BAT_stop_headways) %>% left_join(BAT_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
   mutate(RTA = "BAT") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
+write.csv(BAT_summarized_output, BAT_summarypath)
 
 CATA_summarized_output <- freq_service_summary(CATA_stop_headways) %>% left_join(CATA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
   mutate(RTA = "CATA") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
+write.csv(CATA_summarized_output, CATA_summarypath)
 
 GATRA_summarized_output <- freq_service_summary(GATRA_stop_headways) %>% left_join(GATRA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
   mutate(RTA = "GATRA") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
+write.csv(GATRA_summarized_output, GATRA_summarypath)
 
 LRTA_summarized_output <- freq_service_summary(LRTA_stop_headways) %>% left_join(LRTA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
   mutate(RTA = "LRTA") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
+write.csv(LRTA_summarized_output, LRTA_summarypath)
 
 MVRTA_summarized_output <- freq_service_summary(MVRTA_stop_headways) %>% left_join(MVRTA_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
   mutate(RTA = "MVRTA") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
+write.csv(MVRTA_summarized_output, MVRTA_summarypath)
 
 MW_summarized_output <- freq_service_summary(MW_stop_headways) %>% left_join(MW_GTFS_Output$stops %>% select(stop_id:stop_lon), by = "stop_id") %>% 
   st_as_sf(coords= c("stop_lon", "stop_lat")) %>% st_set_crs(4326) %>% st_transform(26986) %>% 
   mutate(RTA = "MW") %>% select(stop_id, passing_values, frequent_stop, stop_name, geometry, RTA)
+write.csv(MW_summarized_output, MW_summarypath)
 
 RTA_frequent_summary <- rbind(BAT_summarized_output, CATA_summarized_output, GATRA_summarized_output, LRTA_summarized_output, MVRTA_summarized_output, MW_summarized_output)
 
