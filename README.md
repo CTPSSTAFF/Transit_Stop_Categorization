@@ -18,7 +18,9 @@ For the MBTA stops, a stop is frequent if it passes both span thresholds and if 
 
 
 The functions that were created to categorize the RTA stops are found in this script: Functions/Frequent_Stops_Functions.R
+
 The script used to run these functions and create summarized and detailed outputs for the RTA stops is found here: Analysis/Running_Freq_Stops.R
+
 The script used to combine the results from OPMI into a summarzed table of MBTA frequent stops is found here: Analysis/OPMI_MBTA.R
 
 The output folder contains the shapefiles for the MBTA and RTA frequent stop summaries, as well as additional folders containing the detailed and summarized csvs for each individual RTA.
