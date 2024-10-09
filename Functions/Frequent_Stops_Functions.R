@@ -2,6 +2,7 @@ library(gtfsr)
 library(tidyverse)
 library(lubridate)
 library(gtfstools)
+library(sf)
 
 # Convert GTFS times into minutes after midnight.
 to_minutesaftermidnight <- function(GTFS, file, timecolumn) {
@@ -28,20 +29,19 @@ import_gtfs <- function(path) {
 }
 
 # Calculate the stop headway
-stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
+stop_headways_GTFS <- function(path, WD_id, SA_id) {
   
   # load the gtfs data from the local path
   returnedGTFS <- import_gtfs(path)
   
   # Create new table that finds trips in the service schedule that have the 
-  # correct service ID (weekday, Saturday, Sunday)
-  returnedGTFS$tripsinschedule <- returnedGTFS$trips %>% filter(service_id %in% c(WD_id, SA_id, SU_id))
+  # correct service ID (weekday, Saturday)
+  returnedGTFS$tripsinschedule <- returnedGTFS$trips %>% filter(service_id %in% c(WD_id, SA_id))
   
-  # categorizing as weekday, Saturday, and Sunday
+  # categorizing as weekday or Saturday
   returnedGTFS$tripsinschedule <- returnedGTFS$tripsinschedule %>% 
     mutate(DOW = case_when(service_id %in% WD_id ~ "WD",
                            service_id %in% SA_id ~ "SA",
-                           service_id %in% SU_id ~ "SU",
                            TRUE ~ "Err")) %>% 
     mutate(direction_id = NA) #TO DO: Might take this out, not used again
   
@@ -72,6 +72,7 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
   returnedGTFS$stop_times_inSch <- returnedGTFS$stop_times %>% 
     inner_join(returnedGTFS$tripsinschedule %>% select(trip_id, service_id, DOW, 
                                                        route_id, direction_id), by = "trip_id") 
+
   
   # finding the stop headways
   stop_headways <- returnedGTFS$stop_times_inSch %>%
@@ -87,8 +88,9 @@ stop_headways_GTFS <- function(path, WD_id, SA_id, SU_id) {
               lastArrival_mam = max(arrival_time_mam),
               trips = n(),
               averageHeadway = mean(preceding_headway, na.rm = TRUE),
-              longestHeadway = max(preceding_headway, na.rm = TRUE),
-              Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
+              #longestHeadway = max(preceding_headway, na.rm = TRUE),
+              Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE),
+              effectiveHeadway = sum(preceding_headway ^ 2, na.rm = TRUE) / sum(preceding_headway, na.rm = TRUE) ) %>%
     ungroup()
   
   return(stop_headways)
@@ -104,14 +106,14 @@ freq_service_detailed <- function(df) {
       span_max = if_else(DOW %in% c("WD"), 19 * 60, 18.5 * 60),
       
       # set minimum frequency for day of week
-      # TO DO: Check out if the frequency requirements have changed
-      freq_min = if_else(DOW %in% c("WD"), 15, 20),
+      # for RTAs, the frequency threshold is 20 minutes
+      freq_min = 20,
       
       # passes if in the correct span
       span_pass = firstArrival_mam <= span_min &
         lastArrival_mam >= span_max,
       # passes if less than minimum frequency 
-      freq_pass = averageHeadway <= freq_min
+      freq_pass = effectiveHeadway <= freq_min
     )
   return(out)
 }

@@ -69,6 +69,7 @@ stop_headways_GTFS <- function(WD_id, SA_id, SU_id) {
               lastArrival_mam = max(arrival_time_mam),
               trips = n(),
               averageHeadway = mean(preceding_headway, na.rm = TRUE),
+              AWT = (sum(preceding_headway ^ 2, na.rm = TRUE) / (2 * sum(preceding_headway, na.rm = TRUE))),
               longestHeadway = max(preceding_headway, na.rm = TRUE),
               Percentile90_hw = quantile(preceding_headway, probs = 0.90, na.rm = TRUE)) %>% 
     ungroup()
@@ -86,13 +87,13 @@ freq_service_detailed <- function(df) {
       
       # set minimum frequency for day of week
       # TO DO: Check out if the frequency requirements have changed
-      freq_min = if_else(DOW %in% c("WD"), 15, 20),
+      freq_min = if_else(DOW %in% c("WD"), 15, 20), #or half of that
       
       # passes if in the correct span
       span_pass = firstArrival_mam <= span_min &
         lastArrival_mam >= span_max,
       # passes if less than minimum frequency 
-      freq_pass = averageHeadway <= freq_min
+      freq_pass = averageHeadway <= freq_min #Or AWT
     )
   return(out)
 }
@@ -104,7 +105,7 @@ freq_service_summary <- function(df) {
     group_by(stop_id) %>%
     # Adding up the number of times a stop 'passes', for span/frequency, on weekday/weekend
     summarize(passing_values = sum(span_pass, na.rm = TRUE) + sum(freq_pass, na.rm = TRUE)) %>%
-    mutate(frequent_stop = passing_values == 4)
+    mutate(frequent_stop = passing_values >= 4)
   
   return(out)
 }
